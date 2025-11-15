@@ -1,1 +1,8 @@
 @import 'tailwindcss';
+
+@theme {
+    --color-red-button: #e00122;
+    --color-red-button-hover: #b8011c;
+    --color-light-red-button: #d9534f;
+    --color-light-red-button-hover: #e00122;
+}
