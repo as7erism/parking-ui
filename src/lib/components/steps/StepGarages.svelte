@@ -30,7 +30,7 @@
 			<h3 class="mb-2 text-lg font-semibold">Garage List</h3>
 			<div class="grid grid-cols-1 gap-4">
 				{#each garageOptions as garage}
-					<div
+					<button
 						class="cursor-pointer rounded-lg border-2 p-4 shadow-sm transition duration-200
                         {selectedGarage === garage.id
 							? 'scale-101 border-red-button bg-red-50'
@@ -39,7 +39,7 @@
 						onclick={() => (selectedGarage = garage.id)}
 					>
 						<div class="text-center text-lg font-bold text-red-button">{garage.label}</div>
-					</div>
+					</button>
 				{/each}
 			</div>
 		</div>
