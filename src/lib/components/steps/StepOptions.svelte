@@ -38,7 +38,7 @@
 			&times;
 		</button>
 	</div>
-	<hr class="border-t-2 border-red-button" />
+	<hr class="border-t-2 border-red" />
 
 	<div>
 		<div class="mb-2 text-center text-lg font-semibold">
@@ -47,16 +47,13 @@
 		<div class="flex items-center justify-center">
 			{#if permitConfirmed}
 				<button
-					class="rounded-md border bg-red-button px-4 py-2 font-semibold text-white shadow transition"
+					class="rounded-md border bg-red px-4 py-2 font-semibold text-white shadow transition"
 					onclick={() => (showPermitInfo = true)}
 				>
 					Confirmed!
 				</button>
 			{:else}
-				<button
-					class="rounded-md border bg-white px-4 py-2 font-semibold text-black shadow transition hover:bg-gray-200"
-					onclick={() => (showPermitInfo = true)}
-				>
+				<button class="button-ghost-black" onclick={() => (showPermitInfo = true)}>
 					How to Access Parking Facilities
 				</button>
 			{/if}
@@ -72,13 +69,13 @@
 				<button
 					class="cursor-pointer rounded-lg border-2 p-4 shadow-sm transition duration-200
                         {selectedSemester === semester.id
-						? 'scale-101 border-red-button bg-red-50'
+						? 'scale-101 border-red bg-red-50'
 						: 'border-gray-200 bg-gray-50'}
-                        hover:border-red-button"
+                        hover:border-red"
 					onclick={() => (selectedSemester = semester.id)}
 				>
-					<div class="text-center text-lg font-bold text-red-button">{semester.label}</div>
-					<div class="mt-2 text-center text-sm text-gray-800">{semester.dates}</div>
+					<div class="text-center text-lg font-bold">{semester.label}</div>
+					<div class="mt-2 text-center text-sm">{semester.dates}</div>
 				</button>
 			{/each}
 		</div>
@@ -93,9 +90,9 @@
 				<button
 					class="cursor-pointer rounded-lg border-2 p-4 shadow-sm transition duration-200
                         {selectedLocation === location.id
-						? 'scale-101 border-red-button bg-red-50'
+						? 'scale-101 border-red bg-red-50'
 						: 'border-gray-200 bg-gray-50'}
-                        hover:border-red-button"
+                        hover:border-red"
 					onclick={() => (selectedLocation = location.id)}
 				>
 					<div class="text-center font-bold text-gray-800">{location.label}</div>
@@ -107,12 +104,7 @@
 	<hr class="border-t-2 border-black/10" />
 
 	<div class="flex justify-end space-x-4">
-		<button
-			class="rounded-md bg-light-red-button px-3 py-1 font-semibold text-white shadow-xl transition duration-100 hover:bg-light-red-button-hover"
-			onclick={onNext}
-		>
-			Next
-		</button>
+		<button class="button-red" onclick={onNext}> Next </button>
 	</div>
 </div>
 
@@ -121,7 +113,7 @@
 		<div class="w-full max-w-xl rounded-xl bg-white p-8 shadow-2xl">
 			<h2 class="mb-2 text-center text-2xl font-bold">How To Access Parking Facilities</h2>
 
-			<hr class="border-t-2 border-red-button" />
+			<hr class="border-t-2 border-red" />
 
 			<p class="mt-2 mb-2 text-center">
 				To access gated facilities, the parking permission will be assigned to your Bearcat Card
@@ -158,7 +150,7 @@
 					Cancel
 				</button>
 				<button
-					class="rounded-md bg-light-red-button px-3 py-1 font-semibold text-white shadow-xl transition duration-100 hover:bg-light-red-button-hover"
+					class="hover:bg-light-red-hover rounded-md bg-light-red px-3 py-1 font-semibold text-white shadow-xl transition duration-100"
 					onclick={confirmPermitInfo}
 				>
 					Confirm

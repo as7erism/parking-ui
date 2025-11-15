@@ -138,7 +138,7 @@
 			&times;
 		</button>
 	</div>
-	<hr class="border-t-2 border-red-button" />
+	<hr class="border-t-2 border-red" />
 
 	<div class="flex flex-row gap-6">
 		<div class="flex h-[550px] flex-1 flex-col rounded-lg bg-gray-50 p-4">
@@ -148,23 +148,23 @@
 					<button
 						class="w-full cursor-pointer rounded-lg border-2 p-4 shadow-sm transition duration-200
                         {selectedGarage === garage.id
-							? 'scale-101 border-red-button bg-red-50'
+							? 'scale-101 border-red bg-red-50'
 							: 'border-gray-200 bg-gray-50'}
-                        hover:border-red-button"
+                        hover:border-red"
 						onclick={() => selectGarage(garage)}
 					>
 						<div class="flex items-center justify-between">
-							<div class="text-lg font-bold text-red-button">{garage.label}</div>
+							<div class="text-lg font-bold text-red">{garage.label}</div>
 							<div class="text-sm font-semibold text-gray-600">{garage.price}</div>
 						</div>
 					</button>
 				{/each}
 			</div>
 			<!-- {#if selectedGarage}
-				<div class="mt-3 shrink-0 rounded-lg border-2 border-red-button bg-red-50 p-3 shadow-md">
+				<div class="mt-3 shrink-0 rounded-lg border-2 border-red bg-red-50 p-3 shadow-md">
 					<div class="flex items-center justify-between gap-3">
 						<div class="flex-1">
-							<p class="text-xs font-semibold tracking-wide text-red-button/70 uppercase">
+							<p class="text-xs font-semibold tracking-wide text-red/70 uppercase">
 								Selected Garage
 							</p>
 							<p class="mt-0.5 text-base font-bold text-gray-800">
@@ -173,7 +173,7 @@
 						</div>
 						<div class="text-right">
 							<p class="text-xs font-medium text-gray-500">Price</p>
-							<p class="text-lg font-bold text-red-button">
+							<p class="text-lg font-bold text-red">
 								{garageOptions.find((g) => g.id === selectedGarage)?.price}
 							</p>
 						</div>
@@ -191,18 +191,8 @@
 	<hr class="border-t-2 border-black/10" />
 
 	<div class="flex justify-between space-x-4">
-		<button
-			class="rounded-md border bg-white px-3 py-1 font-semibold text-black shadow-xl transition duration-100 hover:bg-gray-200"
-			onclick={onBack}
-		>
-			Back
-		</button>
-		<button
-			class="rounded-md bg-light-red-button px-3 py-1 font-semibold text-white shadow-xl transition duration-100 hover:bg-light-red-button-hover"
-			onclick={onNext}
-		>
-			Next
-		</button>
+		<button class="button-ghost-black" onclick={onBack}> Back </button>
+		<button class="button-red" onclick={onNext}> Next </button>
 	</div>
 </div>
 

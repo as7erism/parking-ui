@@ -1,8 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 @import 'tailwindcss';
 
 @theme {
-    --color-red-button: #e00122;
-    --color-red-button-hover: #b8011c;
-    --color-light-red-button: #d9534f;
-    --color-light-red-button-hover: #e00122;
+	--color-red: #e00122;
+	--color-dark-red: #b8011c;
+	--color-light-red: #d9534f;
+	--color-black: rgb(51, 51, 51);
+}
+
+body {
+	font-family: 'Jost';
+	color: var(--color-black);
+}
+
+button {
+	cursor: pointer;
+}
+
+.content {
+	width: 1170px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.button-red {
+	text-transform: uppercase;
+	transition-duration: 100ms;
+	margin: 7px;
+	padding: 7px 28px 7px 32px;
+	background: var(--color-red);
+	border-radius: 6px;
+	box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.25);
+	color: white;
+	font-size: 15.3px;
+	font-weight: 600;
+	text-align: center;
+}
+
+.button-red:hover {
+	background: var(--color-dark-red);
+	text-decoration: underline;
+}
+
+.button-ghost-red {
+	text-transform: uppercase;
+	transition-duration: 100ms;
+	margin: 7px;
+	padding: 7px 28px 7px 32px;
+	background: white;
+	border-radius: 6px;
+	border-width: 1.6px;
+	border-color: var(--color-red);
+	box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.25);
+	color: var(--color-red);
+	font-size: 15.3px;
+	font-weight: 600;
+	text-align: center;
+}
+
+.button-ghost-red:hover {
+	text-decoration: underline;
+	background: var(--color-dark-red);
+	border-color: var(--color-dark-red);
+	color: white;
+}
+
+.button-ghost-black {
+	text-transform: uppercase;
+	transition-duration: 100ms;
+	margin: 7px;
+	padding: 7px 28px 7px 32px;
+	background: white;
+	border-radius: 6px;
+	border-width: 1.6px;
+	border-color: var(--color-black);
+	box-shadow: 8px 8px 10px rgba(0, 0, 0, 0.25);
+	color: black;
+	font-size: 15.3px;
+	font-weight: 600;
+	text-align: center;
+}
+
+.button-ghost-black:hover {
+	text-decoration: underline;
+	background: var(--color-dark-red);
+	border-color: var(--color-dark-red);
+	color: white;
+}
+
+.button-gray {
+	background: rgb(243, 243, 243);
+	transition-duration: 100ms;
+}
+
+.button-gray:hover {
+	background: rgb(87, 87, 87);
+	color: white;
 }

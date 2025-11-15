@@ -4,7 +4,7 @@
 
 <div class="w-2xl space-y-4 rounded-xl bg-white px-6 py-6 shadow-md">
 	<h2 class="text-center text-2xl font-bold">Parking Terms of Service</h2>
-	<hr class="border-t-2 border-red-button" />
+	<hr class="border-t-2 border-red" />
 	<div class="space-y-4">
 		<div class="max-h-[60vh] overflow-y-auto">
 			<p>
@@ -19,7 +19,7 @@
 					Parking and Transportation Services website
 				</a>.
 			</p>
-			<ul class="my-4 list-disc space-y-2 pl-6 text-sm marker:text-red-button">
+			<ul class="my-4 list-disc space-y-2 pl-6 text-sm marker:text-red">
 				<li>
 					I understand I am unable to purchase a permit for the Blue Ash or Clermont campuses unless
 					I am an employee or student at that campus.
@@ -64,18 +64,8 @@
 		<hr class="border-t-2 border-black/10" />
 
 		<div class="flex justify-between space-x-4">
-			<button
-				class="rounded-md border bg-white px-3 py-1 font-semibold text-black shadow-xl transition duration-100 hover:bg-gray-200"
-				onclick={onClose}
-			>
-				Cancel
-			</button>
-			<button
-				class="rounded-md bg-light-red-button px-3 py-1 font-semibold text-white shadow-xl transition duration-100 hover:bg-light-red-button-hover"
-				onclick={onAgree}
-			>
-				I agree with the UC Parking Policies
-			</button>
+			<button class="button-ghost-black" onclick={onClose}> Cancel </button>
+			<button class="button-red" onclick={onAgree}> I agree with the UC Parking Policies </button>
 		</div>
 	</div>
 </div>
