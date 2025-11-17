@@ -2,6 +2,7 @@
 	import StepTerms from '$lib/components/steps/StepTerms.svelte';
 	import StepOptions from '$lib/components/steps/StepOptions.svelte';
 	import StepGarages from '$lib/components/steps/StepGarages.svelte';
+	import StepVehicle from '$lib/components/steps/StepVehicle.svelte';
 
 	let { onClose } = $props();
 
@@ -16,5 +17,7 @@
 		<StepOptions {onClose} onNext={() => (step += 1)} />
 	{:else if step === 3}
 		<StepGarages {onClose} onNext={() => (step += 1)} onBack={() => (step -= 1)} />
+	{:else if step === 4}
+		<StepVehicle {onClose} onNext={() => (step += 1)} onBack={() => (step -= 1)} />
 	{/if}
 </div>
