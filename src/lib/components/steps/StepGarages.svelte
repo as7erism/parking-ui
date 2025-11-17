@@ -142,7 +142,7 @@
 	<hr class="border-t-2 border-red" />
 
 	<div class="flex flex-row gap-6">
-		<div class="flex h-[550px] flex-1 flex-col rounded-lg bg-gray-50 p-4">
+		<div class="flex h-[450px] flex-1 flex-col rounded-lg bg-gray-50 p-4">
 			<h3 class="mb-2 text-lg font-semibold">Choose a Garage:</h3>
 			<div class="flex min-h-0 flex-1 flex-col space-y-4 overflow-y-auto px-2">
 				{#each garageOptions as garage}

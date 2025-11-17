@@ -64,7 +64,7 @@
 
 	<hr class="border-t-2 border-black/10" />
 
-	<div>
+	<div class="h-80 overflow-y-auto">
 		<div class="mb-3 text-lg font-semibold">Semester:</div>
 		<div class="grid grid-cols-2 gap-4">
 			{#each semesterOptions as semester}
@@ -77,20 +77,18 @@
 				</ButtonGray>
 			{/each}
 		</div>
-	</div>
 
-	<hr class="border-t-2 border-black/10" />
+     <hr class="border-t-2 border-black/10" />
 
-	<div>
 		<div class="mt-6 mb-3 text-lg font-semibold">Location:</div>
 		<div class="grid grid-cols-2 gap-4">
 			{#each locationOptions as location}
-				<ButtonGray
-					toggle={selectedLocation === location.id}
-					onclick={() => (selectedLocation = location.id)}
-				>
-					<div class="text-center font-bold">{location.label}</div>
-				</ButtonGray>
+              <ButtonGray
+                 toggle={selectedLocation === location.id}
+                 onclick={() => (selectedLocation = location.id)}
+              >
+                 <div class="text-center font-bold">{location.label}</div>
+              </ButtonGray>
 			{/each}
 		</div>
 	</div>
@@ -139,7 +137,7 @@
 
 			<div class="flex justify-between space-x-4">
 				<button
-					class="rounded-md border bg-white px-3 py-1 font-semibold text-black shadow-xl transition duration-100 hover:bg-gray-200"
+					class="button-ghost-black"
 					onclick={() => (showPermitInfo = false)}
 				>
 					Cancel
