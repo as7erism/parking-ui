@@ -65,6 +65,12 @@
 {/if}
 
 <style>
+	.content {
+		width: 1170px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
 	.logout {
 		background: var(--color-red);
 		font-family: Jost;

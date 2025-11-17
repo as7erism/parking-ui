@@ -1,5 +1,7 @@
 <script>
-	let { onClose, onNext } = $props();
+	import ButtonGray from '../ButtonGray.svelte';
+
+	let { onClose, onNext, onBack } = $props();
 
 	let semesterOptions = [
 		{ id: 'fall2025', label: 'Fall 2025', dates: '8/15/2025 - 12/31/2025' },
@@ -66,17 +68,13 @@
 		<div class="mb-3 text-lg font-semibold">Semester:</div>
 		<div class="grid grid-cols-2 gap-4">
 			{#each semesterOptions as semester}
-				<button
-					class="cursor-pointer rounded-lg border-2 p-4 shadow-sm transition duration-200
-                        {selectedSemester === semester.id
-						? 'scale-101 border-red bg-red-50'
-						: 'border-gray-200 bg-gray-50'}
-                        hover:border-red"
+				<ButtonGray
+					toggle={selectedSemester === semester.id}
 					onclick={() => (selectedSemester = semester.id)}
 				>
 					<div class="text-center text-lg font-bold">{semester.label}</div>
 					<div class="mt-2 text-center text-sm">{semester.dates}</div>
-				</button>
+				</ButtonGray>
 			{/each}
 		</div>
 	</div>
@@ -87,23 +85,20 @@
 		<div class="mt-6 mb-3 text-lg font-semibold">Location:</div>
 		<div class="grid grid-cols-2 gap-4">
 			{#each locationOptions as location}
-				<button
-					class="cursor-pointer rounded-lg border-2 p-4 shadow-sm transition duration-200
-                        {selectedLocation === location.id
-						? 'scale-101 border-red bg-red-50'
-						: 'border-gray-200 bg-gray-50'}
-                        hover:border-red"
+				<ButtonGray
+					toggle={selectedLocation === location.id}
 					onclick={() => (selectedLocation = location.id)}
 				>
-					<div class="text-center font-bold text-gray-800">{location.label}</div>
-				</button>
+					<div class="text-center font-bold">{location.label}</div>
+				</ButtonGray>
 			{/each}
 		</div>
 	</div>
 
 	<hr class="border-t-2 border-black/10" />
 
-	<div class="flex justify-end space-x-4">
+	<div class="flex justify-between space-x-4">
+		<button class="button-ghost-black" onclick={onBack}> Back </button>
 		<button class="button-red" onclick={onNext}> Next </button>
 	</div>
 </div>
@@ -149,12 +144,7 @@
 				>
 					Cancel
 				</button>
-				<button
-					class="hover:bg-light-red-hover rounded-md bg-light-red px-3 py-1 font-semibold text-white shadow-xl transition duration-100"
-					onclick={confirmPermitInfo}
-				>
-					Confirm
-				</button>
+				<button class="button-red" onclick={confirmPermitInfo}> Confirm </button>
 			</div>
 		</div>
 	</div>

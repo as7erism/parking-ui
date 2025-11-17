@@ -1,4 +1,6 @@
 <script>
+	import ButtonGray from '../ButtonGray.svelte';
+
 	import { onMount } from 'svelte';
 
 	let { onClose, onNext, onBack } = $props();
@@ -143,21 +145,14 @@
 	<div class="flex flex-row gap-6">
 		<div class="flex h-[550px] flex-1 flex-col rounded-lg bg-gray-50 p-4">
 			<h3 class="mb-2 text-lg font-semibold">Choose a Garage:</h3>
-			<div class="min-h-0 flex-1 space-y-4 overflow-y-auto px-2">
+			<div class="flex min-h-0 flex-1 flex-col space-y-4 overflow-y-auto px-2">
 				{#each garageOptions as garage}
-					<button
-						class="w-full cursor-pointer rounded-lg border-2 p-4 shadow-sm transition duration-200
-                        {selectedGarage === garage.id
-							? 'scale-101 border-red bg-red-50'
-							: 'border-gray-200 bg-gray-50'}
-                        hover:border-red"
-						onclick={() => selectGarage(garage)}
-					>
+					<ButtonGray toggle={selectedGarage === garage.id} onclick={() => selectGarage(garage)}>
 						<div class="flex items-center justify-between">
-							<div class="text-lg font-bold text-red">{garage.label}</div>
-							<div class="text-sm font-semibold text-gray-600">{garage.price}</div>
+							<div class="text-lg font-bold">{garage.label}</div>
+							<div class="text-sm font-semibold">{garage.price}</div>
 						</div>
-					</button>
+					</ButtonGray>
 				{/each}
 			</div>
 			<!-- {#if selectedGarage}

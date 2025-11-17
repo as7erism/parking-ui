@@ -13,7 +13,7 @@
 	{#if step === 1}
 		<StepTerms {onClose} onAgree={() => (step += 1)} />
 	{:else if step === 2}
-		<StepOptions {onClose} onNext={() => (step += 1)} />
+		<StepOptions {onClose} onNext={() => (step += 1)} onBack={() => (step -= 1)} />
 	{:else if step === 3}
 		<StepGarages {onClose} onNext={() => (step += 1)} onBack={() => (step -= 1)} />
 	{/if}
