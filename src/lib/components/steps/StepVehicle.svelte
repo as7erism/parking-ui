@@ -80,7 +80,15 @@
 		"Beige","Black","Blue","Brown","Burgundy","Champagne","Gold","Green","Gray","Orange","Pink","Purple","Red","Silver","Tan","White","Yellow","Other"
 	];
 
-	let vehicles = $state([]);
+	let vehicles = $state([
+		{
+			plate: "ABC1234",
+			state: "Ohio",
+			make: "Ford",
+			model: "F-150",
+			color: "Blue"
+		}
+	]);
 
 	let showAddVehicle = $state(false);
 	let plate = $state('');
@@ -106,10 +114,19 @@
 			}
 		];
 
-		// reset
 		plate = stateSel = stateOther = makeSel = makeOther = model = colorSel = colorOther = '';
 		showAddVehicle = false;
 	}
+    let selectedVehicles = $state([]);
+
+    function toggleSelectVehicle(index) {
+        if (selectedVehicles.includes(index)) {
+            selectedVehicles = selectedVehicles.filter(i => i !== index);
+        } else {
+            selectedVehicles = [...selectedVehicles, index];
+        }
+    }
+
 </script>
 
 <div class="w-2xl space-y-4 rounded-xl bg-white px-6 py-6 shadow-md">
@@ -136,17 +153,23 @@
             <div class="text-lg font-semibold mb-2">Registered Vehicles:</div>
 
             <div class="flex flex-wrap gap-3">
-                {#each vehicles as v}
-                    <div class="plate_container">
+                {#each vehicles as v, i}
+                    <div
+                        class="plate_container cursor-pointer"
+                        class:selected={selectedVehicles.includes(i)}
+                        onclick={() => toggleSelectVehicle(i)}
+                    >
                         <div class="plate plate-OH">
                             <div class="plate_header">
                                 <div class="hole"></div>
                                 {v.state}
                                 <div class="hole"></div>
                             </div>
+
                             <div class="plate_number">
                                 {v.plate}
                             </div>
+
                             <div class="plate_footer">
                                 <div class="hole"></div>
                                 <span></span>
@@ -156,6 +179,7 @@
                     </div>
                 {/each}
             </div>
+
         </div>
 	{/if}
 
@@ -237,6 +261,7 @@
  border-width :1px;
  border-style :solid;
  border-radius :5px;
+ transition: box-shadow .2s ease, border-color .2s ease, transform .2s ease;
 }
 
 .plate_container .plate .plate_header{
@@ -262,6 +287,16 @@ border-radius :2px;
 background-color :#fff;
 border-style :solid;
 border-width :1px;
+}
 
+.plate_container.selected .plate {
+	border-color: red !important;
+	box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+}
+
+.plate_container:hover .plate {
+	border-color: red !important;
+	box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+	cursor: pointer;
 }
 </style>
