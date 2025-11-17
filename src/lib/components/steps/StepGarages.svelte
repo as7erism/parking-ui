@@ -65,8 +65,8 @@
 	let selectedGarage = $state('');
 	let map;
 	let markers = {};
-	let redIcon;
-	let blueIcon;
+	let selectedIcon;
+	let defaultIcon;
 
 	onMount(async () => {
 		const L = await import('leaflet');
@@ -77,7 +77,7 @@
 			attribution: '&copy; OpenStreetMap contributors'
 		}).addTo(map);
 
-		redIcon = L.icon({
+		selectedIcon = L.icon({
 			iconUrl:
 				'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
 			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -87,9 +87,8 @@
 			shadowSize: [62, 62]
 		});
 
-		blueIcon = L.icon({
-			iconUrl:
-				'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+		defaultIcon = L.icon({
+			iconUrl: './marker_icon_red.png',
 			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
 			iconSize: [25, 41],
 			iconAnchor: [12, 41],
@@ -98,7 +97,7 @@
 		});
 
 		garageOptions.forEach((garage) => {
-			const marker = L.marker(garage.coords, { icon: blueIcon }).addTo(map);
+			const marker = L.marker(garage.coords, { icon: defaultIcon }).addTo(map);
 			marker.bindPopup(`
 				<b>${garage.label}</b><br>
 				<i>${garage.price}</i>
@@ -115,13 +114,13 @@
 	function selectGarage(garage) {
 		// Reset previous selection
 		if (selectedGarage && markers[selectedGarage]) {
-			markers[selectedGarage].setIcon(blueIcon);
+			markers[selectedGarage].setIcon(defaultIcon);
 		}
 
 		selectedGarage = garage.id;
 		const marker = markers[garage.id];
 		if (marker) {
-			marker.setIcon(redIcon);
+			marker.setIcon(selectedIcon);
 			map.panTo(garage.coords, { animate: true, duration: 0.5 });
 			marker.openPopup();
 		}
