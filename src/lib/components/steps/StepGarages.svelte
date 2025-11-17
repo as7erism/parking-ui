@@ -1,4 +1,6 @@
 <script>
+	import ButtonGray from '../ButtonGray.svelte';
+
 	import { onMount } from 'svelte';
 
 	let { onClose, onNext, onBack } = $props();
@@ -63,8 +65,8 @@
 	let selectedGarage = $state('');
 	let map;
 	let markers = {};
-	let redIcon;
-	let blueIcon;
+	let selectedIcon;
+	let defaultIcon;
 
 	onMount(async () => {
 		const L = await import('leaflet');
@@ -75,7 +77,7 @@
 			attribution: '&copy; OpenStreetMap contributors'
 		}).addTo(map);
 
-		redIcon = L.icon({
+		selectedIcon = L.icon({
 			iconUrl:
 				'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
 			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -85,9 +87,8 @@
 			shadowSize: [62, 62]
 		});
 
-		blueIcon = L.icon({
-			iconUrl:
-				'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+		defaultIcon = L.icon({
+			iconUrl: './marker_icon_red.png',
 			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
 			iconSize: [25, 41],
 			iconAnchor: [12, 41],
@@ -96,7 +97,7 @@
 		});
 
 		garageOptions.forEach((garage) => {
-			const marker = L.marker(garage.coords, { icon: blueIcon }).addTo(map);
+			const marker = L.marker(garage.coords, { icon: defaultIcon }).addTo(map);
 			marker.bindPopup(`
 				<b>${garage.label}</b><br>
 				<i>${garage.price}</i>
@@ -113,13 +114,13 @@
 	function selectGarage(garage) {
 		// Reset previous selection
 		if (selectedGarage && markers[selectedGarage]) {
-			markers[selectedGarage].setIcon(blueIcon);
+			markers[selectedGarage].setIcon(defaultIcon);
 		}
 
 		selectedGarage = garage.id;
 		const marker = markers[garage.id];
 		if (marker) {
-			marker.setIcon(redIcon);
+			marker.setIcon(selectedIcon);
 			map.panTo(garage.coords, { animate: true, duration: 0.5 });
 			marker.openPopup();
 		}
@@ -141,23 +142,16 @@
 	<hr class="border-t-2 border-red" />
 
 	<div class="flex flex-row gap-6">
-		<div class="flex h-[550px] flex-1 flex-col rounded-lg bg-gray-50 p-4">
+		<div class="flex h-[450px] flex-1 flex-col rounded-lg bg-gray-50 p-4">
 			<h3 class="mb-2 text-lg font-semibold">Choose a Garage:</h3>
-			<div class="min-h-0 flex-1 space-y-4 overflow-y-auto px-2">
+			<div class="flex min-h-0 flex-1 flex-col space-y-4 overflow-y-auto px-2">
 				{#each garageOptions as garage}
-					<button
-						class="w-full cursor-pointer rounded-lg border-2 p-4 shadow-sm transition duration-200
-                        {selectedGarage === garage.id
-							? 'scale-101 border-red bg-red-50'
-							: 'border-gray-200 bg-gray-50'}
-                        hover:border-red"
-						onclick={() => selectGarage(garage)}
-					>
+					<ButtonGray toggle={selectedGarage === garage.id} onclick={() => selectGarage(garage)}>
 						<div class="flex items-center justify-between">
-							<div class="text-lg font-bold text-red">{garage.label}</div>
-							<div class="text-sm font-semibold text-gray-600">{garage.price}</div>
+							<div class="text-lg font-bold">{garage.label}</div>
+							<div class="text-sm font-semibold">{garage.price}</div>
 						</div>
-					</button>
+					</ButtonGray>
 				{/each}
 			</div>
 			<!-- {#if selectedGarage}
