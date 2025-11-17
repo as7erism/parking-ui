@@ -132,36 +132,31 @@
 	</div>
 
 	{#if vehicles.length > 0}
-		<div class="mt-4 space-y-2">
-			<div class="text-lg font-semibold">Registered Vehicles:</div>
+        <div class="mt-4">
+            <div class="text-lg font-semibold mb-2">Registered Vehicles:</div>
 
-			{#each vehicles as v}
-				<!-- <div class="rounded-lg border-2 border-gray-300 bg-gray-50 p-3 shadow-sm">
-					<div class="text-center text-xl font-bold text-red-button">{v.plate}</div>
-					<div class="text-center text-sm text-gray-700">
-						{v.state} • {v.color} {v.make} {v.model}
-					</div>
-				</div> -->
-    
-                <div class="plate_container">
-                    <div class="plate plate-OH">
-                        <div class="plate_header">
-                            <div class="hole"></div>
-                            {v.state}
-                            <div class="hole"></div>
-                        </div>
-                        <div class="plate_number">
-                            {v.plate}
-                        </div>
-                        <div class="plate_footer">
-                            <div class="hole"></div>
-                            <span></span>
-                            <div class="hole"></div>
+            <div class="flex flex-wrap gap-3">
+                {#each vehicles as v}
+                    <div class="plate_container">
+                        <div class="plate plate-OH">
+                            <div class="plate_header">
+                                <div class="hole"></div>
+                                {v.state}
+                                <div class="hole"></div>
+                            </div>
+                            <div class="plate_number">
+                                {v.plate}
+                            </div>
+                            <div class="plate_footer">
+                                <div class="hole"></div>
+                                <span></span>
+                                <div class="hole"></div>
+                            </div>
                         </div>
                     </div>
-                </div>
-			{/each}
-		</div>
+                {/each}
+            </div>
+        </div>
 	{/if}
 
 	<hr class="border-t-2 border-black/10" />
