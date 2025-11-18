@@ -47,10 +47,10 @@
 			<h1 class="font-[Jost] text-5xl font-bold text-black">Your Passes</h1>
 			<div class="m-7 grid grid-cols-2 space-y-5">
 				{#each passes as pass}
-					<div class="relative w-fit">
+					<div class="relative w-fit text-sm">
 						<img class="h-55 drop-shadow-lg" src="/active_pass.png" />
 						<div class="absolute top-26 right-0 left-0 flex flex-col items-center justify-center">
-							<p class="weight-200 w-20 text-center font-[Jost] text-white">
+							<p class="weight-200 w-25 text-center font-[Jost] text-white">
 								{garages[pass.garage].label}
 							</p>
 							<p class="weight-200 font-[Jost] text-white">{semesters[pass.semester].label}</p>
