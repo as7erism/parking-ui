@@ -48,6 +48,8 @@ This sketch outlines a UI for a garage selection with a visual map. Those survey
 
 Those surveyed found this sketch clean and organized.
 
+We formalized our designs in a [Canva document](https://www.canva.com/design/DAG4nWtO6kk/7Xgz269ZV1MA3ZsISA2Uvg/view?utm_content=DAG4nWtO6kk&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hb77ff9bd99#5).
+
 ## App
 
 On the home screen, the user is presented with three sections: a panel with important information,
