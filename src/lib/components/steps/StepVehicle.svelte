@@ -186,8 +186,10 @@
 	]);
 
 	let showAddVehicle = $state(false);
+	let showEditVehicle = $state(false);
 	let editIndex = $state(null);
 
+	// Add form state
 	let plate = $state('');
 	let stateSel = $state('');
 	let stateOther = $state('');
@@ -196,6 +198,16 @@
 	let model = $state('');
 	let colorSel = $state('');
 	let colorOther = $state('');
+
+	// Edit form state
+	let editPlate = $state('');
+	let editStateSel = $state('');
+	let editStateOther = $state('');
+	let editMakeSel = $state('');
+	let editMakeOther = $state('');
+	let editModel = $state('');
+	let editColorSel = $state('');
+	let editColorOther = $state('');
 
 	let selectedVehicles = $state([]);
 
@@ -223,6 +235,65 @@
 		} else {
 			selectedVehicles = [...selectedVehicles, index];
 		}
+	}
+
+	function openEditVehicle(index) {
+		const v = vehicles[index];
+		editIndex = index;
+
+		editPlate = v.plate;
+		editStateSel = v.state;
+		editStateOther = '';
+		editMakeSel = v.make;
+		editMakeOther = '';
+		editModel = v.model;
+		editColorSel = v.color;
+		editColorOther = '';
+
+		showEditVehicle = true;
+	}
+
+	function handleEditClick(event, index) {
+		event.stopPropagation();
+		openEditVehicle(index);
+	}
+
+	function updateVehicle() {
+		if (editIndex === null || editIndex === undefined) return;
+
+		const updated = {
+			plate: editPlate,
+			state: editStateSel === 'OTHER' ? editStateOther : editStateSel,
+			make: editMakeSel === 'OTHER' ? editMakeOther : editMakeSel,
+			model: editModel,
+			color: editColorSel === 'Other' ? editColorOther : editColorSel
+		};
+
+		vehicles = vehicles.map((v, idx) => (idx === editIndex ? updated : v));
+
+		editIndex = null;
+		editPlate =
+			editStateSel =
+			editStateOther =
+			editMakeSel =
+			editMakeOther =
+			editModel =
+			editColorSel =
+			editColorOther =
+				'';
+		showEditVehicle = false;
+	}
+
+	function deleteVehicle() {
+		if (editIndex === null || editIndex === undefined) return;
+
+		if (confirm('Are you sure you want to delete this vehicle?')) {
+			vehicles = vehicles.filter((_, idx) => idx !== editIndex);
+			selectedVehicles = [];
+		}
+
+		editIndex = null;
+		showEditVehicle = false;
 	}
 </script>
 
@@ -254,6 +325,14 @@
 						onclick={() => toggleSelectVehicle(i)}
 					>
 						<div class="plate plate-OH">
+							<button
+								type="button"
+								class="edit-icon"
+								onclick={(event) => handleEditClick(event, i)}
+							>
+								✏️
+							</button>
+
 							<div class="plate_header">
 								<div class="hole"></div>
 								{v.state}
@@ -343,6 +422,78 @@
 	</div>
 {/if}
 
+{#if showEditVehicle}
+	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+		<div class="w-full max-w-xl space-y-4 rounded-xl bg-white p-6 shadow-2xl">
+			<h2 class="text-center text-2xl font-bold">Edit Vehicle</h2>
+			<hr class="border-red-button border-t-2" />
+
+			<input class="w-full rounded-md border p-2" placeholder="Plate #" bind:value={editPlate} />
+
+			<select class="w-full rounded-md border p-2" bind:value={editStateSel}>
+				<option value="">State/Prov.</option>
+				{#each stateOptions as s}
+					<option value={s.label}>{s.label}</option>
+				{/each}
+			</select>
+			{#if editStateSel === 'OTHER'}
+				<input
+					class="w-full rounded-md border p-2"
+					placeholder="Enter State/Province"
+					bind:value={editStateOther}
+				/>
+			{/if}
+
+			<select class="w-full rounded-md border p-2" bind:value={editMakeSel}>
+				<option value="">Make</option>
+				{#each makeOptions as m}
+					<option value={m}>{m}</option>
+				{/each}
+			</select>
+			{#if editMakeSel === 'OTHER'}
+				<input
+					class="w-full rounded-md border p-2"
+					placeholder="Enter Make"
+					bind:value={editMakeOther}
+				/>
+			{/if}
+
+			<input class="w-full rounded-md border p-2" placeholder="Model" bind:value={editModel} />
+
+			<select class="w-full rounded-md border p-2" bind:value={editColorSel}>
+				<option value="">Color</option>
+				{#each colorOptions as c}
+					<option value={c}>{c}</option>
+				{/each}
+			</select>
+			{#if editColorSel === 'Other'}
+				<input
+					class="w-full rounded-md border p-2"
+					placeholder="Enter Color"
+					bind:value={editColorOther}
+				/>
+			{/if}
+
+			<div class="flex justify-between space-x-4">
+				<button
+					class="button-ghost-black"
+					onclick={() => {
+						showEditVehicle = false;
+						editIndex = null;
+					}}
+				>
+					Cancel
+				</button>
+
+				<div class="flex space-x-2">
+					<button class="button-ghost-black" onclick={deleteVehicle}>Delete Vehicle</button>
+					<button class="button-red" onclick={updateVehicle}>Save Changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+{/if}
+
 <style>
 	.plate_container {
 		color: red;
@@ -404,5 +555,23 @@
 		border-color: red !important;
 		box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
 		cursor: pointer;
+	}
+
+	.plate_container .plate .edit-icon {
+		position: absolute;
+		top: 1px;
+		right: 1px;
+		background: rgba(255, 255, 255, 0.95);
+		border-radius: 9999px;
+		border: 1px solid #d1d5db;
+		font-size: 10px;
+		line-height: 1;
+		padding: 2px 4px;
+		cursor: pointer;
+	}
+
+	.plate_container .plate .edit-icon:hover {
+		background: #fee2e2;
+		border-color: #ef4444;
 	}
 </style>
