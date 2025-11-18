@@ -1,4 +1,5 @@
 <script>
+	import { orderState } from '$lib/state.svelte';
 	import ButtonGray from '../ButtonGray.svelte';
 
 	import { onMount } from 'svelte';
@@ -62,7 +63,6 @@
 		}
 	];
 
-	let selectedGarage = $state('');
 	let map;
 	let markers = {};
 	let selectedIcon;
@@ -113,11 +113,11 @@
 
 	function selectGarage(garage) {
 		// Reset previous selection
-		if (selectedGarage && markers[selectedGarage]) {
-			markers[selectedGarage].setIcon(defaultIcon);
+		if (orderState.garage && markers[orderState.garage]) {
+			markers[orderState.garage].setIcon(defaultIcon);
 		}
 
-		selectedGarage = garage.id;
+		orderState.garage = garage.id;
 		const marker = markers[garage.id];
 		if (marker) {
 			marker.setIcon(selectedIcon);
@@ -146,7 +146,7 @@
 			<h3 class="mb-2 text-lg font-semibold">Choose a Garage</h3>
 			<div class="flex min-h-0 flex-1 flex-col space-y-4 overflow-y-auto px-2">
 				{#each garageOptions as garage}
-					<ButtonGray toggle={selectedGarage === garage.id} onclick={() => selectGarage(garage)}>
+					<ButtonGray toggle={orderState.garage === garage.id} onclick={() => selectGarage(garage)}>
 						<div class="flex items-center justify-between">
 							<div class="text-lg font-bold">{garage.label}</div>
 							<div class="text-sm font-semibold">{garage.price}</div>
@@ -154,7 +154,7 @@
 					</ButtonGray>
 				{/each}
 			</div>
-			<!-- {#if selectedGarage}
+			<!-- {#if orderState.garage}
 				<div class="mt-3 shrink-0 rounded-lg border-2 border-red bg-red-50 p-3 shadow-md">
 					<div class="flex items-center justify-between gap-3">
 						<div class="flex-1">
@@ -162,13 +162,13 @@
 								Selected Garage
 							</p>
 							<p class="mt-0.5 text-base font-bold text-gray-800">
-								{garageOptions.find((g) => g.id === selectedGarage)?.label}
+								{garageOptions.find((g) => g.id === orderState.garage)?.label}
 							</p>
 						</div>
 						<div class="text-right">
 							<p class="text-xs font-medium text-gray-500">Price</p>
 							<p class="text-lg font-bold text-red">
-								{garageOptions.find((g) => g.id === selectedGarage)?.price}
+								{garageOptions.find((g) => g.id === orderState.garage)?.price}
 							</p>
 						</div>
 					</div>
@@ -186,7 +186,7 @@
 
 	<div class="flex justify-between space-x-4">
 		<button class="button-ghost-black" onclick={onBack}> Back </button>
-		{#if selectedGarage}
+		{#if orderState.garage}
 			<button class="button-red" onclick={onNext}> Next </button>
 		{:else}
 			<button class="button-ghost-black-disabled cursor-no-drop" disabled> Next </button>

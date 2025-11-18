@@ -1,4 +1,5 @@
 <script>
+	import { orderState } from '$lib/state.svelte';
 	import ButtonGray from '../ButtonGray.svelte';
 
 	let { onClose, onNext, onBack } = $props();
@@ -10,12 +11,8 @@
 		{ id: 'branch', label: 'Branch Campus Parking' },
 		{ id: 'east', label: 'East Campus Parking Facilities' },
 		{ id: 'offcampus', label: 'Off Campus Housing Parking' },
-		{ id: 'west', label: 'West Campus Parking Facilities' },
-		{ id: 'other', label: 'Other' }
+		{ id: 'west', label: 'West Campus Parking Facilities' }
 	];
-
-	let selectedSemester = $state('');
-	let selectedLocation = $state('');
 </script>
 
 <div class="w-2xl space-y-3 rounded-xl bg-white px-6 py-6 shadow-md">
@@ -36,8 +33,8 @@
 		<div class="mb-1 text-lg font-semibold">Semester</div>
 		<div class="mb-3 grid grid-cols-2 gap-4">
 			<ButtonGray
-				toggle={selectedSemester === semesterFall.id}
-				onclick={() => (selectedSemester = semesterFall.id)}
+				toggle={orderState.semester === semesterFall.id}
+				onclick={() => (orderState.semester = semesterFall.id)}
 			>
 				<div class="text-center text-lg font-bold">{semesterFall.label}</div>
 				<div class="mt-1 text-center text-sm">{semesterFall.dates}</div>
@@ -60,8 +57,8 @@
 		<div class="grid grid-cols-2 gap-3">
 			{#each locationOptions as location}
 				<ButtonGray
-					toggle={selectedLocation === location.id}
-					onclick={() => (selectedLocation = location.id)}
+					toggle={orderState.location === location.id}
+					onclick={() => (orderState.location = location.id)}
 				>
 					<div class="text-center font-bold">{location.label}</div>
 				</ButtonGray>
@@ -73,7 +70,7 @@
 
 	<div class="flex justify-between space-x-4">
 		<button class="button-ghost-black" onclick={onBack}> Back </button>
-		{#if selectedSemester && selectedLocation}
+		{#if orderState.semester && orderState.location}
 			<button class="button-red" onclick={onNext}> Next </button>
 		{:else}
 			<button class="button-ghost-black-disabled" disabled> Next </button>

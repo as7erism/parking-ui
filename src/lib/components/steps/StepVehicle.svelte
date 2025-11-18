@@ -1,5 +1,5 @@
 <script>
-	import { getPersistent, savePersistent } from '$lib/state.svelte';
+	import { getPersistent, orderState, savePersistent } from '$lib/state.svelte';
 	import { onMount } from 'svelte';
 
 	let { onClose, onNext, onBack } = $props();
@@ -180,6 +180,7 @@
 
 	onMount(() => {
 		vehicles = getPersistent().vehicles;
+		$inspect(vehicles);
 	});
 
 	let showAddVehicle = $state(false);
@@ -206,8 +207,6 @@
 	let editColorSel = $state('');
 	let editColorOther = $state('');
 
-	let selectedVehicles = $state([]);
-
 	function saveVehicle() {
 		if (!plate) return;
 		vehicles = [
@@ -229,10 +228,10 @@
 	}
 
 	function toggleSelectVehicle(index) {
-		if (selectedVehicles.includes(index)) {
-			selectedVehicles = selectedVehicles.filter((i) => i !== index);
+		if (orderState.vehicles.includes(index)) {
+			orderState.vehicles = orderState.vehicles.filter((i) => i !== index);
 		} else {
-			selectedVehicles = [...selectedVehicles, index];
+			orderState.vehicles = [...orderState.vehicles, index];
 		}
 	}
 
@@ -288,7 +287,7 @@
 
 		if (confirm('Are you sure you want to delete this vehicle?')) {
 			vehicles = vehicles.filter((_, idx) => idx !== editIndex);
-			selectedVehicles = [];
+			orderState.vehicles = [];
 		}
 
 		editIndex = null;
@@ -320,14 +319,18 @@
 				{#each vehicles as v, i}
 					<div class="plate drop-shadow-xl duration-100 hover:scale-125">
 						<button class="relative" onclick={() => toggleSelectVehicle(i)}>
-							<img src="./plate.png" class="h-25" class:selected={selectedVehicles.includes(i)} />
+							<img
+								src="./plate.png"
+								class="h-25"
+								class:selected={orderState.vehicles.includes(i)}
+							/>
 
 							<h3 class="absolute inset-0 top-1.5 flex justify-center text-sm text-white uppercase">
 								{v.state}
 							</h3>
 							<h3
 								class="absolute inset-0 top-8 flex justify-center text-3xl uppercase"
-								class:selected={selectedVehicles.includes(i)}
+								class:selected={orderState.vehicles.includes(i)}
 							>
 								{v.plate}
 							</h3>
