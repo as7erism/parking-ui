@@ -20,7 +20,7 @@
 	<div class="flex flex-row justify-between">
 		<div class="h-100 w-90 rounded-2xl bg-red shadow-2xl">
 			<h1 class="p-5 text-center font-[Jost] text-7xl font-bold text-white text-shadow-lg">
-				10 Days
+				{Math.ceil((new Date('2025-12-1') - new Date()) / (1000 * 60 * 60 * 24))} Days
 			</h1>
 			<p class="p-3 text-center font-[Jost] text-xl text-white">
 				Till parking passes are available for <b>next semester</b> on <b>December 1st</b>
