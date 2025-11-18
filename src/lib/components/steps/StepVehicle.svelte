@@ -69,13 +69,13 @@
 		{ code: 'WA', label: 'Washington' },
 		{ code: 'WI', label: 'Wisconsin' },
 		{ code: 'WY', label: 'Wyoming' },
-		{ code: 'OTHER', label: 'Other' }
+		{ code: 'OTHER', label: 'OTHER' }
 	];
 
 	const makeOptions = [
 		'Abarth',
 		'Acura',
-		'ALFA ROMEO',
+		'Alfa Romeo',
 		'Aston Martin',
 		'Audi',
 		'Bentley',
@@ -83,7 +83,7 @@
 		'Box Truck',
 		'Buick',
 		'Cadillac',
-		'CANAM',
+		'Canam',
 		'Chevrolet',
 		'Chrysler',
 		'Daewoo',
@@ -94,12 +94,10 @@
 		'Fiat',
 		'Fisker',
 		'Focus',
-		'FOODTRUCK',
 		'Ford',
 		'Genesis',
 		'Geo',
 		'GMC',
-		'GOLFCART',
 		'Harley Davidson',
 		'Honda',
 		'Hummer',
@@ -128,7 +126,7 @@
 		'Oldsmobile',
 		'Patriot',
 		'Plymouth',
-		'POLARIS',
+		'Polaris',
 		'Pontiac',
 		'Porsche',
 		'Range Rover',
@@ -172,7 +170,7 @@
 		'Tan',
 		'White',
 		'Yellow',
-		'Other'
+		'OTHER'
 	];
 
 	let vehicles = $state([
@@ -221,7 +219,7 @@
 				state: stateSel === 'OTHER' ? stateOther : stateSel,
 				make: makeSel === 'OTHER' ? makeOther : makeSel,
 				model,
-				color: colorSel === 'Other' ? colorOther : colorSel
+				color: colorSel === 'OTHER' ? colorOther : colorSel
 			}
 		];
 
@@ -266,7 +264,7 @@
 			state: editStateSel === 'OTHER' ? editStateOther : editStateSel,
 			make: editMakeSel === 'OTHER' ? editMakeOther : editMakeSel,
 			model: editModel,
-			color: editColorSel === 'Other' ? editColorOther : editColorSel
+			color: editColorSel === 'OTHER' ? editColorOther : editColorSel
 		};
 
 		vehicles = vehicles.map((v, idx) => (idx === editIndex ? updated : v));
@@ -300,26 +298,26 @@
 <div class="w-2xl space-y-4 rounded-xl bg-white px-6 py-6 shadow-md">
 	<div class="mb-2 flex items-center justify-between">
 		<div class="w-10 shrink-0"></div>
-		<h2 class="flex-1 text-center text-2xl font-bold">Vehicle Registration</h2>
+		<h2 class="flex-1 text-center text-2xl font-bold">Vehicle Selection</h2>
 		<button
 			class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 border-gray-300 pb-1 text-2xl leading-none font-bold text-gray-600 transition hover:border-red-600 hover:bg-red-50 hover:text-red-600"
 			onclick={onClose}>&times;</button
 		>
 	</div>
 
-	<hr class="border-red-button border-t-2" />
+	<hr class="border-t-2 border-red" />
 
 	<div class="text-center">
-		<button class="button-ghost-red" onclick={() => (showAddVehicle = true)}> Add Vehicle </button>
+		<button class="button-ghost-red" onclick={() => (showAddVehicle = true)}>Add Vehicle</button>
 	</div>
 
 	{#if vehicles.length > 0}
-		<div class="mt-4">
-			<div class="mb-2 text-lg font-semibold">Registered Vehicles</div>
+		<div class="mt-4 rounded-lg bg-gray-50 p-4">
+			<div class="mb-2 text-lg font-semibold">Select a Vehicle</div>
 
 			<div class="flex flex-wrap gap-3">
 				{#each vehicles as v, i}
-					<div class="plate duration-100 hover:scale-125 hover:drop-shadow-xl">
+					<div class="plate drop-shadow-xl duration-100 hover:scale-125">
 						<button class="relative" onclick={() => toggleSelectVehicle(i)}>
 							<img src="./plate.png" class="h-25" class:selected={selectedVehicles.includes(i)} />
 
@@ -333,7 +331,7 @@
 								{v.plate}
 							</h3>
 							<div
-								class="absolute inset-0 top-18 flex justify-center space-x-5 text-sm text-white uppercase"
+								class="absolute inset-0 top-16 flex items-center justify-center space-x-5 text-sm text-white uppercase"
 							>
 								<h3>{v.make}</h3>
 								<h3>{v.model}</h3>
@@ -403,7 +401,7 @@
 					<option value={c}>{c}</option>
 				{/each}
 			</select>
-			{#if colorSel === 'Other'}
+			{#if colorSel === 'OTHER'}
 				<input
 					class="w-full rounded-md border p-2"
 					placeholder="Enter Color"
@@ -413,7 +411,11 @@
 
 			<div class="flex justify-between space-x-4">
 				<button class="button-ghost-black" onclick={() => (showAddVehicle = false)}>Cancel</button>
-				<button class="button-red" onclick={saveVehicle}>Save Vehicle</button>
+				{#if plate && stateSel && makeSel && model && colorSel}
+					<button class="button-red" onclick={saveVehicle}>Save Vehicle</button>
+				{:else}
+					<button class="button-ghost-black-disabled" disabled>Save Vehicle</button>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -482,10 +484,12 @@
 					Cancel
 				</button>
 
-				<div class="flex space-x-2">
-					<button class="button-ghost-black" onclick={deleteVehicle}>Delete</button>
-					<button class="button-red" onclick={updateVehicle}>Save</button>
-				</div>
+				<button class="button-ghost-black" onclick={deleteVehicle}>Delete</button>
+				{#if editPlate && editStateSel && editMakeSel && editModel && editColorSel}
+					<button class="button-red" onclick={updateVehicle}>Save Vehicle</button>
+				{:else}
+					<button class="button-ghost-black-disabled" disabled>Save Vehicle</button>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -493,11 +497,12 @@
 
 <style>
 	.selected {
-		filter: brightness(0) saturate(100%) invert(16%) sepia(81%) saturate(7498%) hue-rotate(345deg)
-			brightness(85%) contrast(109%);
+		filter: brightness(0) saturate(100%) invert(17%) sepia(52%) saturate(5949%) hue-rotate(341deg)
+			brightness(88%) contrast(118%);
 	}
 
 	.edit-icon {
+		box-shadow: 3px 3px 5px rgb(0 0 0 / 0.25);
 		transition-duration: 100ms;
 		opacity: 0;
 	}
