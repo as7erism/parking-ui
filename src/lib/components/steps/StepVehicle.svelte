@@ -1,4 +1,7 @@
 <script>
+	import { getPersistent, savePersistent } from '$lib/state.svelte';
+	import { onMount } from 'svelte';
+
 	let { onClose, onNext, onBack } = $props();
 
 	const stateOptions = [
@@ -173,15 +176,11 @@
 		'OTHER'
 	];
 
-	let vehicles = $state([
-		{
-			plate: 'ABC1234',
-			state: 'Ohio',
-			make: 'Ford',
-			model: 'F-150',
-			color: 'Blue'
-		}
-	]);
+	let vehicles = $state([]);
+
+	onMount(() => {
+		vehicles = getPersistent().vehicles;
+	});
 
 	let showAddVehicle = $state(false);
 	let showEditVehicle = $state(false);
@@ -211,7 +210,6 @@
 
 	function saveVehicle() {
 		if (!plate) return;
-
 		vehicles = [
 			...vehicles,
 			{
@@ -223,6 +221,9 @@
 			}
 		];
 
+		let oldState = getPersistent();
+		oldState.vehicles = vehicles;
+		savePersistent(oldState);
 		plate = stateSel = stateOther = makeSel = makeOther = model = colorSel = colorOther = '';
 		showAddVehicle = false;
 	}
