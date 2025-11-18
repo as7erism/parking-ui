@@ -9,7 +9,7 @@
 		src="https://uc.aimsparking.com/resources/index.php?cmd=get_site_logo"
 		alt=""
 	/>
-	<p class="logout">Logout</p>
+	<p class="logout cursor-pointer">Logout</p>
 </div>
 <div class="h-[23px] bg-red shadow-lg">
 	<div class="content flex justify-end">
@@ -38,8 +38,8 @@
 				</div>
 			</div>
 			<div class="flex">
-				<a class="button-red" onclick={() => (showPermitModal = true)}>ORDER PASS</a>
-				<a class="button-ghost-red">PREVIOUS PASSES</a>
+				<a class="button-red cursor-pointer" onclick={() => (showPermitModal = true)}>ORDER PASS</a>
+				<a class="button-ghost-red cursor-pointer">PREVIOUS PASSES</a>
 			</div>
 		</div>
 		<div class="">
@@ -54,7 +54,7 @@
 				</div>
 			</div>
 			<div class="flex">
-				<a class="button-ghost-red">PREVIOUS VIOLATIONS</a>
+				<a class="button-ghost-red cursor-pointer">PREVIOUS VIOLATIONS</a>
 			</div>
 		</div>
 	</div>
