@@ -279,7 +279,7 @@
 	<hr class="border-t-2 border-black/10" />
 	<div class="flex justify-between space-x-4">
 		<button class="button-ghost-black" onclick={onBack}>Back</button>
-		<button class="button-red" onClick={onNext}>Next</button>
+		<button class="button-red" onclick={onNext}>Next</button>
 	</div>
 </div>
 
