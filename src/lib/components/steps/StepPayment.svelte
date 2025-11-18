@@ -127,8 +127,8 @@
 	<div class="flex justify-between space-x-4">
 		<button class="button-ghost-black" onclick={onBack}>Back</button>
 		<div class="flex space-x-4">
-			<button class="button-ghost-black">Add to Semester Bill</button>
-			<button class="button-red">Go to Checkout</button>
+			<button class="button-ghost-black" onclick={onClose}>Add to Semester Bill</button>
+			<button class="button-red" onclick={onClose}>Go to Checkout</button>
 		</div>
 	</div>
 </div>
