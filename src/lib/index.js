@@ -38,7 +38,7 @@ export const garages = {
 		coords: [39.13430385716343, -84.51740487729688],
 		price: '$169.75'
 	},
-	'Clifton Lot Garage': {
+	'Clifton Lot': {
 		id: 'Clifton Lot',
 		label: 'Clifton Lot',
 		coords: [39.13494166002273, -84.52053863379037],
