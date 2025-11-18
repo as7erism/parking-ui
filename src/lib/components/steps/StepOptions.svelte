@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div class="w-2xl space-y-4 rounded-xl bg-white px-6 py-6 shadow-md">
+<div class="w-2xl space-y-3 rounded-xl bg-white px-6 py-6 shadow-md">
 	<div class="mb-2 flex items-center justify-between">
 		<div class="w-10 shrink-0"></div>
 		<h2 class="flex-1 text-center text-2xl font-bold">Permit Options</h2>
@@ -43,7 +43,7 @@
 	<hr class="border-t-2 border-red" />
 
 	<div>
-		<div class="mb-2 text-center text-lg font-semibold">
+		<div class="text-center text-lg font-semibold">
 			Please review the following information and confirm
 		</div>
 		<div class="flex items-center justify-center">
@@ -64,31 +64,31 @@
 
 	<hr class="border-t-2 border-black/10" />
 
-	<div class="h-80 overflow-y-auto">
-		<div class="mb-3 text-lg font-semibold">Semester:</div>
-		<div class="grid grid-cols-2 gap-4">
+	<div class="h-80 overflow-y-auto px-4 pb-3">
+		<div class="mb-1 text-lg font-semibold">Semester:</div>
+		<div class="mb-3 grid grid-cols-2 gap-4">
 			{#each semesterOptions as semester}
 				<ButtonGray
 					toggle={selectedSemester === semester.id}
 					onclick={() => (selectedSemester = semester.id)}
 				>
 					<div class="text-center text-lg font-bold">{semester.label}</div>
-					<div class="mt-2 text-center text-sm">{semester.dates}</div>
+					<div class="mt-1 text-center text-sm">{semester.dates}</div>
 				</ButtonGray>
 			{/each}
 		</div>
 
-     <hr class="border-t-2 border-black/10" />
+		<!-- <hr class="border-t-2 border-black/10" /> -->
 
-		<div class="mt-6 mb-3 text-lg font-semibold">Location:</div>
-		<div class="grid grid-cols-2 gap-4">
+		<div class="text-lg font-semibold">Location:</div>
+		<div class="grid grid-cols-2 gap-3">
 			{#each locationOptions as location}
-              <ButtonGray
-                 toggle={selectedLocation === location.id}
-                 onclick={() => (selectedLocation = location.id)}
-              >
-                 <div class="text-center font-bold">{location.label}</div>
-              </ButtonGray>
+				<ButtonGray
+					toggle={selectedLocation === location.id}
+					onclick={() => (selectedLocation = location.id)}
+				>
+					<div class="text-center font-bold">{location.label}</div>
+				</ButtonGray>
 			{/each}
 		</div>
 	</div>
@@ -97,7 +97,11 @@
 
 	<div class="flex justify-between space-x-4">
 		<button class="button-ghost-black" onclick={onBack}> Back </button>
-		<button class="button-red" onclick={onNext}> Next </button>
+		{#if permitConfirmed && selectedSemester && selectedLocation}
+			<button class="button-red" onclick={onNext}> Next </button>
+		{:else}
+			<button class="button-ghost-black-disabled" disabled> Next </button>
+		{/if}
 	</div>
 </div>
 
@@ -110,9 +114,16 @@
 
 			<p class="mt-2 mb-2 text-center">
 				To access gated facilities, the parking permission will be assigned to your Bearcat Card
-				within 2 hours of purchase. For hands-free access, please purchase a <span class="font-bold"
-					>Fast Pass</span
-				> under the 'Order Permits' page.
+				within 2 hours of purchase. For hands-free access, please purchase a
+				<a
+					href="https://www.uc.edu/about/parking/resources/parking-policies.html#fastpass/"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="font-semibold text-blue-600 underline hover:text-blue-800"
+				>
+					Fast Pass
+				</a>
+				under the 'Order Permits' page.
 			</p>
 			<p class="mb-2 text-center">
 				Parking and Transportation Services uses license plate recognition, LPR, to enforce policies
@@ -136,10 +147,7 @@
 			</p>
 
 			<div class="flex justify-between space-x-4">
-				<button
-					class="button-ghost-black"
-					onclick={() => (showPermitInfo = false)}
-				>
+				<button class="button-ghost-black" onclick={() => (showPermitInfo = false)}>
 					Cancel
 				</button>
 				<button class="button-red" onclick={confirmPermitInfo}> Confirm </button>

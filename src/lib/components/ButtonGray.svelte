@@ -13,7 +13,7 @@
 	.button-gray {
 		transition-duration: 100ms;
 		border-radius: 8px;
-		padding: 16px;
+		padding: 11px;
 	}
 
 	.button-gray:hover {

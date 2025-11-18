@@ -121,13 +121,13 @@
 		const marker = markers[garage.id];
 		if (marker) {
 			marker.setIcon(selectedIcon);
-			map.panTo(garage.coords, { animate: true, duration: 0.5 });
+			map.flyTo(garage.coords, 16, { duration: 0.5 });
 			marker.openPopup();
 		}
 	}
 </script>
 
-<div class="w-6xl space-y-4 rounded-xl bg-white px-6 py-6 shadow-md">
+<div class="w-5xl space-y-4 rounded-xl bg-white px-6 py-6 shadow-md">
 	<div class="mb-2 flex items-center justify-between">
 		<div class="w-10 shrink-0"></div>
 		<h2 class="flex-1 text-center text-2xl font-bold">Garage Selection</h2>
@@ -186,7 +186,11 @@
 
 	<div class="flex justify-between space-x-4">
 		<button class="button-ghost-black" onclick={onBack}> Back </button>
-		<button class="button-red" onclick={onNext}> Next </button>
+		{#if selectedGarage}
+			<button class="button-red" onclick={onNext}> Next </button>
+		{:else}
+			<button class="button-ghost-black-disabled cursor-no-drop" disabled> Next </button>
+		{/if}
 	</div>
 </div>
 
