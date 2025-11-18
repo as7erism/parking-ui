@@ -3,10 +3,8 @@
 
 	let { onClose, onNext, onBack } = $props();
 
-	let semesterOptions = [
-		{ id: 'fall2025', label: 'Fall 2025', dates: '8/15/2025 - 12/31/2025' },
-		{ id: 'spring2026', label: 'Spring 2026', dates: '1/10/2026 - 4/30/2026' }
-	];
+	let semesterFall = { id: 'fall2025', label: 'Fall 2025', dates: '8/15/2025 - 12/31/2025' };
+	let semesterSpring = { id: 'spring2026', label: 'Spring 2026', dates: '1/10/2026 - 4/30/2026' };
 
 	let locationOptions = [
 		{ id: 'branch', label: 'Branch Campus Parking' },
@@ -37,15 +35,23 @@
 	<div class="h-80 overflow-y-auto px-4 pb-3">
 		<div class="mb-1 text-lg font-semibold">Semester</div>
 		<div class="mb-3 grid grid-cols-2 gap-4">
-			{#each semesterOptions as semester}
-				<ButtonGray
-					toggle={selectedSemester === semester.id}
-					onclick={() => (selectedSemester = semester.id)}
+			<ButtonGray
+				toggle={selectedSemester === semesterFall.id}
+				onclick={() => (selectedSemester = semesterFall.id)}
+			>
+				<div class="text-center text-lg font-bold">{semesterFall.label}</div>
+				<div class="mt-1 text-center text-sm">{semesterFall.dates}</div>
+			</ButtonGray>
+			<div class="disabled-semester relative p-11">
+				<div class="text-center text-lg font-bold">{semesterSpring.label}</div>
+				<div class="mt-1 text-center text-sm">{semesterSpring.dates}</div>
+				<div
+					class="disabled-popup absolute inset-0 flex flex-col items-center justify-center bg-white text-xl text-red"
 				>
-					<div class="text-center text-lg font-bold">{semester.label}</div>
-					<div class="mt-1 text-center text-sm">{semester.dates}</div>
-				</ButtonGray>
-			{/each}
+					<p>Not Available Till</p>
+					<p>December 1st</p>
+				</div>
+			</div>
 		</div>
 
 		<!-- <hr class="border-t-2 border-black/10" /> -->
@@ -74,3 +80,24 @@
 		{/if}
 	</div>
 </div>
+
+<style>
+	.disabled-semester {
+		padding: 11px;
+		background: lightgray;
+		border-radius: 6px;
+		color: gray;
+		text-align: center;
+		cursor: not-allowed;
+		opacity: 0.6;
+	}
+
+	.disabled-semester .disabled-popup {
+		transition-duration: 200ms;
+		opacity: 0;
+	}
+
+	.disabled-semester:hover .disabled-popup {
+		opacity: 1;
+	}
+</style>
