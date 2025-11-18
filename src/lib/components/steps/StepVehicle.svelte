@@ -319,36 +319,33 @@
 
 			<div class="flex flex-wrap gap-3">
 				{#each vehicles as v, i}
-					<div
-						class="plate_container cursor-pointer"
-						class:selected={selectedVehicles.includes(i)}
-						onclick={() => toggleSelectVehicle(i)}
-					>
-						<div class="plate plate-OH">
-							<button
-								type="button"
-								class="edit-icon"
-								onclick={(event) => handleEditClick(event, i)}
-							>
-								✏️
-							</button>
+					<div class="plate duration-100 hover:scale-125 hover:drop-shadow-xl">
+						<button class="relative" onclick={() => toggleSelectVehicle(i)}>
+							<img src="./plate.png" class="h-25" class:selected={selectedVehicles.includes(i)} />
 
-							<div class="plate_header">
-								<div class="hole"></div>
+							<h3 class="absolute inset-0 top-1.5 flex justify-center text-sm text-white uppercase">
 								{v.state}
-								<div class="hole"></div>
-							</div>
-
-							<div class="plate_number">
+							</h3>
+							<h3
+								class="absolute inset-0 top-8 flex justify-center text-3xl uppercase"
+								class:selected={selectedVehicles.includes(i)}
+							>
 								{v.plate}
+							</h3>
+							<div
+								class="absolute inset-0 top-18 flex justify-center space-x-5 text-sm text-white uppercase"
+							>
+								<h3>{v.make}</h3>
+								<h3>{v.model}</h3>
 							</div>
-
-							<div class="plate_footer">
-								<div class="hole"></div>
-								<span></span>
-								<div class="hole"></div>
-							</div>
-						</div>
+						</button>
+						<button
+							type="button"
+							class="edit-icon absolute top-0 right-0 rounded-full border-3 border-red bg-white p-1"
+							onclick={(event) => handleEditClick(event, i)}
+						>
+							<img src="./edit_icon.png" class="h-5" />
+						</button>
 					</div>
 				{/each}
 			</div>
@@ -486,8 +483,8 @@
 				</button>
 
 				<div class="flex space-x-2">
-					<button class="button-ghost-black" onclick={deleteVehicle}>Delete Vehicle</button>
-					<button class="button-red" onclick={updateVehicle}>Save Changes</button>
+					<button class="button-ghost-black" onclick={deleteVehicle}>Delete</button>
+					<button class="button-red" onclick={updateVehicle}>Save</button>
 				</div>
 			</div>
 		</div>
@@ -495,83 +492,17 @@
 {/if}
 
 <style>
-	.plate_container {
-		color: red;
+	.selected {
+		filter: brightness(0) saturate(100%) invert(16%) sepia(81%) saturate(7498%) hue-rotate(345deg)
+			brightness(85%) contrast(109%);
 	}
 
-	.plate_number {
-		color: black;
-		margin: 11px;
+	.edit-icon {
+		transition-duration: 100ms;
+		opacity: 0;
 	}
 
-	.plate_container .plate {
-		display: block;
-		position: relative;
-		height: 80px;
-		width: 160px;
-		margin: 0 auto;
-		text-align: center;
-		border-width: 1px;
-		border-style: solid;
-		border-radius: 5px;
-		transition:
-			box-shadow 0.2s ease,
-			border-color 0.2s ease,
-			transform 0.2s ease;
-	}
-
-	.plate_container .plate .plate_header {
-		background-color: red;
-		color: #fff;
-	}
-
-	.plate_container .plate .plate_header,
-	.plate_container .plate .plate_footer {
-		line-height: 12px;
-		font-size: 12px;
-		height: 16px;
-		margin: 0 auto;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 0 25px;
-	}
-
-	.plate_container .plate .hole {
-		height: 4px;
-		width: 6px;
-		border-radius: 2px;
-		background-color: #fff;
-		border-style: solid;
-		border-width: 1px;
-	}
-
-	.plate_container.selected .plate {
-		border-color: red !important;
-		box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-	}
-
-	.plate_container:hover .plate {
-		border-color: red !important;
-		box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-		cursor: pointer;
-	}
-
-	.plate_container .plate .edit-icon {
-		position: absolute;
-		top: 1px;
-		right: 1px;
-		background: rgba(255, 255, 255, 0.95);
-		border-radius: 9999px;
-		border: 1px solid #d1d5db;
-		font-size: 10px;
-		line-height: 1;
-		padding: 2px 4px;
-		cursor: pointer;
-	}
-
-	.plate_container .plate .edit-icon:hover {
-		background: #fee2e2;
-		border-color: #ef4444;
+	.plate:hover .edit-icon {
+		opacity: 1;
 	}
 </style>
