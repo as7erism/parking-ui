@@ -1,45 +1,15 @@
 <script>
+	import { locations, semesters, garages } from '$lib';
+	import { getPersistent, orderState } from '$lib/state.svelte';
+	import { onMount } from 'svelte';
+
 	let { onClose, onNext, onBack } = $props();
 
-	// Dummy data to set via state management
-	let selectedSemester = { id: 'spring2026', label: 'Spring 2026', dates: '1/10/2026 - 4/30/2026' };
-	let selectedLocation = { id: 'west', label: 'West Campus Parking Facilities' };
-	let selectedGarage = {
-		id: 'Campus Green Garage',
-		label: 'Campus Green Garage',
-		coords: [39.1349648654834, -84.51447297939468],
-		price: '$169.75'
-	};
-	let selectedVehicles = [
-		{
-			plate: 'ABC1234',
-			state: 'Ohio',
-			make: 'Ford',
-			model: 'F-150',
-			color: 'Blue'
-		},
-		{
-			plate: 'ABC1234',
-			state: 'Ohio',
-			make: 'Ford',
-			model: 'F-150',
-			color: 'Blue'
-		},
-		{
-			plate: 'ABC1234',
-			state: 'Ohio',
-			make: 'Ford',
-			model: 'F-150',
-			color: 'Blue'
-		},
-		{
-			plate: 'ABC1234',
-			state: 'Ohio',
-			make: 'Ford',
-			model: 'F-150',
-			color: 'Blue'
-		}
-	];
+	let vehicles = $state([]);
+
+	onMount(() => {
+		vehicles = getPersistent().vehicles;
+	});
 </script>
 
 <div class="w-2xl space-y-4 rounded-xl bg-white px-6 py-6 shadow-md">
@@ -63,8 +33,10 @@
 				<div
 					class="flex h-full max-h-22 flex-col justify-center rounded-lg bg-light-gray px-4 py-3"
 				>
-					<div class="text-center text-lg font-bold">{selectedSemester.label}</div>
-					<div class="mt-1 text-center text-sm text-gray">{selectedSemester.dates}</div>
+					<div class="text-center text-lg font-bold">{semesters[orderState.semester].label}</div>
+					<div class="mt-1 text-center text-sm text-gray">
+						{semesters[orderState.semester].dates}
+					</div>
 				</div>
 			</div>
 
@@ -73,7 +45,7 @@
 				<div
 					class="flex h-full max-h-22 items-center justify-center rounded-lg bg-light-gray px-4 py-3"
 				>
-					<div class="text-center text-lg font-bold">{selectedLocation.label}</div>
+					<div class="text-center text-lg font-bold">{locations[orderState.location].label}</div>
 				</div>
 			</div>
 		</div>
@@ -82,30 +54,30 @@
 			<h3 class="mb-2 text-lg font-semibold">Garage</h3>
 			<div class="rounded-lg bg-light-gray px-4 py-3">
 				<div class="flex items-center justify-between">
-					<div class="text-lg font-bold">{selectedGarage.label}</div>
-					<div class="text-lg font-bold">{selectedGarage.price}</div>
+					<div class="text-lg font-bold">{garages[orderState.garage].label}</div>
+					<div class="text-lg font-bold">{garages[orderState.garage].price}</div>
 				</div>
 			</div>
 		</div>
 
 		<div>
 			<h3 class="mb-2 text-lg font-semibold">
-				Vehicles {selectedVehicles.length > 0 ? `(${selectedVehicles.length})` : ''}
+				Vehicles {orderState.vehicles.length > 0 ? `(${orderState.vehicles.length})` : ''}
 			</h3>
-			{#if selectedVehicles.length > 0}
+			{#if orderState.vehicles.length > 0 && vehicles.length > 0}
 				<div class="max-h-38 space-y-2 overflow-y-auto">
-					{#each selectedVehicles as vehicle}
+					{#each orderState.vehicles as vehicleIndex}
 						<div class="flex items-center justify-between rounded-lg bg-light-gray px-4 py-3">
 							<div class="flex items-center space-x-3">
 								<span class="rounded bg-red px-2 py-1 font-mono font-bold text-white"
-									>{vehicle.plate}</span
+									>{vehicles[vehicleIndex].plate}</span
 								>
-								<span class="text-sm text-gray">{vehicle.state}</span>
+								<span class="text-sm text-gray">{vehicles[vehicleIndex].state}</span>
 							</div>
 							<span class="font-medium"
-								>{vehicle.year}
-								{vehicle.make}
-								{vehicle.model} - {vehicle.color}</span
+								>{vehicles[vehicleIndex].year}
+								{vehicles[vehicleIndex].make}
+								{vehicles[vehicleIndex].model} - {vehicles[vehicleIndex].color}</span
 							>
 						</div>
 					{/each}
@@ -125,8 +97,8 @@
 	<div class="flex justify-between space-x-4">
 		<button class="button-ghost-black" onclick={onBack}>Back</button>
 		<div class="flex space-x-4">
-			<button class="button-ghost-red" onclick={onClose}>Add to Semester Bill</button>
-			<button class="button-red" onclick={onClose}>Go to Checkout</button>
+			<button class="button-ghost-red" onclick={onNext}>Add to Semester Bill</button>
+			<button class="button-red" onclick={onNext}>Go to Checkout</button>
 		</div>
 	</div>
 </div>

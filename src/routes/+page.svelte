@@ -1,6 +1,23 @@
 <script>
+	import { garages, semesters } from '$lib';
 	import PermitModal from '$lib/components/PermitModal.svelte';
+	import { getPersistent, orderState, resetOrder } from '$lib/state.svelte';
+	import { onMount } from 'svelte';
 	let showPermitModal = $state(false);
+
+	let passes = $state([]);
+
+	onMount(() => {
+		passes = getPersistent().passes;
+	});
+
+	function pay() {
+		passes.push({
+			garage: orderState.garage,
+			semester: orderState.semester,
+			vehicles: orderState.vehicles
+		});
+	}
 </script>
 
 <div class="content flex items-end justify-between">
@@ -30,11 +47,19 @@
 			<h1 class="font-[Jost] text-5xl font-bold text-black">Your Passes</h1>
 			<div class="m-7 grid grid-cols-2 space-y-5">
 				<div class="relative w-fit">
-					<img class="h-50 drop-shadow-lg" src="/no_parking_pass.png" />
-					<div class="absolute top-1/2 right-0 left-0 flex flex-col items-center justify-center">
-						<p class="weight-200 font-[Jost] text-black">No Passes</p>
-						<p class="weight-200 font-[Jost] text-black">Order Below</p>
-					</div>
+					{#each passes as pass}
+						<img class="h-55 drop-shadow-lg" src="/active_pass.png" />
+						<div class="absolute top-1/2 right-0 left-0 flex flex-col items-center justify-center">
+							<p class="weight-200 font-[Jost] text-white">{garages[pass.garage].label}</p>
+							<p class="weight-200 font-[Jost] text-white">{semesters[pass.semester].label}</p>
+						</div>
+					{:else}
+						<img class="h-55 drop-shadow-lg" src="/no_parking_pass.png" />
+						<div class="absolute top-1/2 right-0 left-0 flex flex-col items-center justify-center">
+							<p class="weight-200 font-[Jost] text-black">No Passes</p>
+							<p class="weight-200 font-[Jost] text-black">Order Below</p>
+						</div>
+					{/each}
 				</div>
 			</div>
 			<div class="flex">
@@ -61,7 +86,13 @@
 </div>
 
 {#if showPermitModal}
-	<PermitModal onClose={() => (showPermitModal = false)} />
+	<PermitModal
+		onClose={() => {
+			resetOrder();
+			showPermitModal = false;
+		}}
+		onPay={pay}
+	/>
 {/if}
 
 <style>

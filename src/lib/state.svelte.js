@@ -8,8 +8,17 @@ export function getPersistent() {
 			savePersistent({
 				passes: [
 					{
-						garage: 'Woodside',
-						timeframe: 'Spring 2026'
+						garage: 'Woodside Garage',
+						semester: 'spring2026',
+						vehicles: [
+							{
+								plate: 'ABC1234',
+								stats: 'OH',
+								make: 'Honda',
+								model: 'Civic',
+								color: 'Black'
+							}
+						]
 					}
 				],
 				vehicles: [
@@ -31,4 +40,19 @@ export function getPersistent() {
 export function savePersistent(data) {
 	persistent = data;
 	localStorage.setItem('persistent', JSON.stringify(persistent));
+}
+
+export const orderState = $state({
+	termsAccepted: false,
+	location: null,
+	semester: null,
+	garage: null,
+	vehicles: []
+});
+
+export function resetOrder() {
+	orderState.location = null;
+	orderState.semester = null;
+	orderState.garage = null;
+	orderState.vehicles = [];
 }

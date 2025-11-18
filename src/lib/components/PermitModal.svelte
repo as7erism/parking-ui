@@ -4,8 +4,9 @@
 	import StepGarages from '$lib/components/steps/StepGarages.svelte';
 	import StepVehicle from '$lib/components/steps/StepVehicle.svelte';
 	import StepPayment from '$lib/components/steps/StepPayment.svelte';
+	import StepConfirmed from './steps/StepConfirmed.svelte';
 
-	let { onClose } = $props();
+	let { onClose, onPay } = $props();
 
 	let step = $state(1);
 	const totalSteps = 5;
@@ -21,6 +22,15 @@
 	{:else if step === 4}
 		<StepVehicle {onClose} onNext={() => (step += 1)} onBack={() => (step -= 1)} />
 	{:else if step === 5}
-		<StepPayment {onClose} onNext={() => (step += 1)} onBack={() => (step -= 1)} />
+		<StepPayment
+			{onClose}
+			onNext={() => {
+				onPay();
+				step += 1;
+			}}
+			onBack={() => (step -= 1)}
+		/>
+	{:else if step === 6}
+		<StepConfirmed {onClose} />
 	{/if}
 </div>
