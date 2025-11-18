@@ -1,38 +1,32 @@
-# sv
+# UC Parking Redesign
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A redesign of the widely-panned University of Cincinnati parking pass management UI.
 
-## Creating a project
+## Design
 
-If you're seeing this, you've probably already done this step. Congrats!
+Our research began with employing Nielsen's 10 Principles to identify pain points of the original application.
+Some issues we identified were the following:
 
-```sh
-# create a new project in the current directory
-npx sv create
+1. Visibility of System Status
 
-# create a new project in my-app
-npx sv create my-app
-```
+There are many notable pieces of information, like what dates passes become available, that are hidden in text-heavy boxes at the bottom of the home page.
+We aimed to consolidate this information and make it more immediately accessible.
 
-## Developing
+2. Match Between System and the Real World
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+There exists some strange use of vocabulary in the original UI.
+For instance, the term "parking permit" is used throughout the application, despite "parking pass" being a more well-known term.
 
-```sh
-npm run dev
+3. Recognition Rather than Recall
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+In the original UI, there is no indication for where lots are located on campus, which requires users to recall information they may have never seen before.
+There is no provided method for locating lots in the original application.
+We aimed to provide a means for users to easily locate their intended parking location.
 
-## Building
+4. Aesthetic and Minimalist Design
 
-To create a production version of your app:
+The original UI contains an overabundance of buttons and options, many of which are redundant.
+Its style is also unaligned with that of most official UC sites.
+We aimed to unify the style with UC sites and consolidate the options.
 
-```sh
-npm run build
-```
 
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
